@@ -126,7 +126,7 @@ const toggleDoneTask = (taskId: string) => {
                   )}
                   {/* แสดง Date & Time */}
                   {task.isDone && (
-                    <Text size="xs" c="kota">
+                    <Text size="xs" c="ice">
                       Done at: {task.doneTime?.toLocaleString()}
                     </Text>
                   )}
