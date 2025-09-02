@@ -20,6 +20,7 @@ interface Task {
   description: string;
   isDone: boolean;
   dueDate: Date | null;
+  doneTime?: Date | null;
 }
 
 export default function HomePage() {
@@ -30,6 +31,7 @@ export default function HomePage() {
       description: "Vite + React + Mantine + TS",
       isDone: false,
       dueDate: new Date(),
+      doneTime: new Date()
     },
     {
       id: "2",
@@ -37,6 +39,7 @@ export default function HomePage() {
       description: "Finish project for class",
       isDone: false,
       dueDate: new Date(),
+      doneTime: new Date()
     },
     {
       id: "3",
@@ -44,6 +47,7 @@ export default function HomePage() {
       description: "Push project to GitHub Pages",
       isDone: false,
       dueDate: new Date(),
+      doneTime: new Date()
     },
   ]);
   const lorem = new LoremIpsum({
@@ -74,11 +78,20 @@ export default function HomePage() {
   };
 
   // Toggle done
-  const toggleDoneTask = (taskId: string) => {
-    setTasks((prev) =>
-      prev.map((t) => (t.id === taskId ? { ...t, isDone: !t.isDone } : t))
-    );
-  };
+const toggleDoneTask = (taskId: string) => {
+  setTasks((prev) =>
+    prev.map((t) =>
+      t.id === taskId
+        ? {
+            ...t,
+            isDone: !t.isDone,
+            doneTime: !t.isDone ? new Date() : t.doneTime,
+          }
+        : t
+    )
+  );
+};
+
 
   return (
     <Container size="sm" py="lg">
@@ -112,31 +125,29 @@ export default function HomePage() {
                     </Text>
                   )}
                   {/* แสดง Date & Time */}
-                  <Text size="xs" c="gray">
-                    Done at:
-                  </Text>
+                  {task.isDone && (
+                    <Text size="xs" c="kota">
+                      Done at: {task.doneTime?.toLocaleString()}
+                    </Text>
+                  )}
                 </Stack>
                 {/* แสดง Button Done & Button Delete */}
                 <Group>
-                  <Button
-                    style={{
-                      backgroundColor: "#71c32fda",
-                      color: "#dce6e7ff",
-                    }}
+                  <Checkbox
                     variant="light"
-                    size="xs"
-                    onClick={() => toggleDoneTask(task.id)}
-                  >
-                    Done
-                  </Button>
-                  <Button
-                    color="chanadda"
+                    size="sm"
+                    checked={task.isDone}
+                    onChange={() => toggleDoneTask(task.id)}
+                    label="Done"
+                  ></Checkbox>
+                  <ActionIcon
+                    color="red"
                     variant="light"
-                    size="xs"
+                    size="md"
                     onClick={() => deleteTask(task.id)}
                   >
-                    Delete
-                  </Button>
+                    <IconTrash size={18} />
+                  </ActionIcon>
                 </Group>
               </Group>
             </Card>
