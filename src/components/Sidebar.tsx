@@ -12,7 +12,7 @@ interface SidebarComponentProps  {
   userName: string;
   type?: "admin" |"student";
 }
-export type { SidebarProps };
+export type { SidebarComponentProps };
 export default function Sidebar() {
   return (
     <Stack
@@ -42,9 +42,20 @@ export default function Sidebar() {
         </Text> */}
       </Box>
       {/* แสดงผู้ใช้งาน */}
-      <Box p={10}>
-        <Text>chanadda</Text>
-      </Box>
+      <Group >
+  <Box p={"xs"} style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+    <Indicator color="red" position="bottom-end" size={10} offset={6}  >
+      <Avatar
+        size="md"
+        radius="xl"
+        src="/photo.jpg"
+      />
+    </Indicator>
+    <Text fw={500}>User: Ice : Student</Text>
+  </Box>
+</Group>
+
+     
     </Stack>
   );
 }
